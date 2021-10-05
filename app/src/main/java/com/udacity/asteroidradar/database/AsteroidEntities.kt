@@ -3,7 +3,7 @@ package com.udacity.asteroidradar.database
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.udacity.asteroidradar.domain.Domain
+import com.udacity.asteroidradar.domain.Model
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -15,9 +15,9 @@ data class Asteroid constructor(
                     val relativeVelocity: Double, val distanceFromEarth: Double,
                     val isPotentiallyHazardous: Boolean) : Parcelable
 
-fun List<Asteroid>.asDomainModel(): List<Domain>{
+fun List<Asteroid>.asDomainModel(): List<Model>{
     return map {
-        Domain(
+        Model(
             id = it.id,
             codename = it.codename,
             closeApproachDate = it.closeApproachDate,

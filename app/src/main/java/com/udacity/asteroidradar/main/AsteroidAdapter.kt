@@ -25,8 +25,7 @@ class AsteroidAdapter: RecyclerView.Adapter<ViewHolder>(){
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       holder.binding.also {
-          it.activityMainImageOfTheDay
-          it.textView.text = asteroid.toString()
+
       }
 
     }
