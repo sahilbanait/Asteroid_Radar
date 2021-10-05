@@ -7,10 +7,12 @@ import com.udacity.asteroidradar.database.Asteroid
 import com.udacity.asteroidradar.network.AsteroidApi
 import com.udacity.asteroidradar.network.AsteroidApiService
 import com.udacity.asteroidradar.network.PictureOfDay
+import com.udacity.asteroidradar.network.getDatabase
+import com.udacity.asteroidradar.respository.AsteroidRepository
 import kotlinx.coroutines.launch
 
 enum class AsteroidApiStatus { LOADING, ERROR, DONE }
-class MainViewModel(picture: PictureOfDay, application: Application) : AndroidViewModel(application) {
+class MainViewModel( application: Application) : AndroidViewModel(application) {
 
     private val _response = MutableLiveData<String>()
     val response: LiveData<String>
@@ -26,13 +28,19 @@ class MainViewModel(picture: PictureOfDay, application: Application) : AndroidVi
 
     init {
         getAsterioidProperties()
-        _pictureOfTheDay.value = picture
-        refreshDataFromNetwork()
-    }
-
-    private fun refreshDataFromNetwork() = viewModelScope.launch {
+        _pictureOfTheDay.value
 
     }
+    private val database = getDatabase(application)
+    private val asteroidRepository = AsteroidRepository(database)
+    init {
+        viewModelScope.launch {
+            asteroidRepository.refreshAsteroid()
+        }
+    }
+    val list = asteroidRepository.asteroid
+
+
 
 
     private fun getAsterioidProperties() {
@@ -48,4 +56,5 @@ class MainViewModel(picture: PictureOfDay, application: Application) : AndroidVi
             }
         }
     }
+
 }
