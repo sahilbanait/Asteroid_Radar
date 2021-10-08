@@ -3,8 +3,11 @@ package com.udacity.asteroidradar
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.squareup.picasso.Picasso
 
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
@@ -51,6 +54,9 @@ fun goneIfNotNull(view: View, it: Any?) {
  */
 @BindingAdapter("imageUrl")
 fun setImageUrl(imageView: ImageView, url: String) {
-    Glide.with(imageView.context).load(url).into(imageView)
+    val imgUri = url.toUri().buildUpon().scheme("http").build()
+    Picasso.get().load(imgUri)
+        .placeholder(R.drawable.placeholder_picture_of_day)
+        .error(R.drawable.placeholder_picture_of_day).into(imageView)
 }
 
