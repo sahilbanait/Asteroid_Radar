@@ -35,6 +35,6 @@ class AsteroidAdapter: RecyclerView.Adapter<ViewHolder>(){
 class ViewHolder( val binding: FragmentMainBinding): RecyclerView.ViewHolder(binding.root){
     companion object{
         @LayoutRes
-        val LAYOUT = R.layout.fragment_detail
+        val LAYOUT = R.layout.asteroid
     }
 }
