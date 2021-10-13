@@ -23,6 +23,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+   buildTypes.each{
+       it.buildConfigField 'String','Nasa_API_Key', myNasaAPI
+   }
     buildFeatures {
         viewBinding true
         dataBinding true
@@ -34,6 +37,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
 }
 
 dependencies {

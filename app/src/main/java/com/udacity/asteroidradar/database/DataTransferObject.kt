@@ -6,16 +6,9 @@ import com.udacity.asteroidradar.domain.PictureOfTheDay
 
 
 
-//@JsonClass(generateAdapter = true)
-//data class NetworkAsteroid (val id: Long, val codename: String, val closeApproachDate: String,
-//val absoluteMagnitude: Double, val estimatedDiameter: Double,
-//val relativeVelocity: Double, val distanceFromEarth: Double,
-//val isPotentiallyHazardous: Boolean)
-
-
-fun List<Model>.asDatabaseModel(): Array<Asteroid>{
+fun List<Model>.asDatabaseModel(): Array<AsteroidEntity>{
     return map {
-        Asteroid(
+        AsteroidEntity(
             id = it.id,
             codename = it.codename,
             closeApproachDate = it.closeApproachDate,

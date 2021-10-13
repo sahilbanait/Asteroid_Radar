@@ -6,7 +6,7 @@
 
     <data>
         <variable
-            name="asteroid"
+            name="model"
             type="com.udacity.asteroidradar.domain.Model" />
     </data>
 
@@ -23,7 +23,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/roboto_medium"
-            android:text="@{asteroid.codename}"
+            android:text="@{model.codename}"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toTopOf="@+id/closeApproachDate"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_medium"
-            android:text="@{asteroid.closeApproachDate}"
+            android:text="@{model.closeApproachDate}"
             android:textColor="@android:color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/codename" />
@@ -53,7 +53,7 @@
             app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_status_normal"
-            app:statusIcon="@{asteroid.potentiallyHazardous}"
+            app:statusIcon="@{model.potentiallyHazardous}"
             android:contentDescription="@string/potentially_hazardous" />
 
         <androidx.constraintlayout.widget.Guideline

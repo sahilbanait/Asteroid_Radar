@@ -10,14 +10,14 @@ import com.udacity.asteroidradar.domain.PictureOfTheDay
 
 
 @Entity(tableName = "asteroid")
-data class Asteroid constructor(
+data class AsteroidEntity constructor(
     @PrimaryKey
     val id: Long, val codename: String, val closeApproachDate: String,
                     val absoluteMagnitude: Double, val estimatedDiameter: Double,
                     val relativeVelocity: Double, val distanceFromEarth: Double,
                     val isPotentiallyHazardous: Boolean)
 
-fun List<Asteroid>.asDomainModel(): List<Model>{
+fun List<AsteroidEntity>.asDomainModel(): List<Model>{
     return map {
         Model(
             id = it.id,
@@ -33,7 +33,7 @@ fun List<Asteroid>.asDomainModel(): List<Model>{
 
 }
 
-@Entity(tableName = "PicturOfTheDay")
+@Entity(tableName = "pictureOfTheDay")
 data class PictureEntity(
     @PrimaryKey
     val url: String,

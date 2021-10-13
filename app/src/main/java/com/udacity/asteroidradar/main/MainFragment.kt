@@ -42,7 +42,7 @@ class MainFragment : Fragment() {
 //        })
         viewModel.list.observe(viewLifecycleOwner, Observer<List<Model>>{
                 model -> model?.apply {
-            binding.asteroidRecycler.adapter as AsteroidAdapter
+            (binding.asteroidRecycler.adapter as AsteroidAdapter)
 
         }
         })
