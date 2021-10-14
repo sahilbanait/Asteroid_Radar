@@ -14,22 +14,23 @@ import com.udacity.asteroidradar.domain.Model
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
     private val viewModel: MainViewModel by lazy {
+        val activity = requireNotNull(this.activity)
         ViewModelProvider(this, Factory(activity?.application)).get(MainViewModel::class.java)
     }
 
-    private var viewModelAdapter: AsteroidAdapter? = null
+    private var viewModelAdapter: AsteroidAdapter? = AsteroidAdapter(AsteroidListener {
+
+    })
 
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, coner: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val binding = FragmentMainBinding.inflate(inflater)
+        binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         setHasOptionsMenu(true)
-        recyclerAdapter()
-
-        binding.root.findViewById<RecyclerView>(R.id.asteroid_recycler).apply {
+        binding.asteroidRecycler.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = viewModelAdapter
         }
@@ -37,14 +38,11 @@ class MainFragment : Fragment() {
     }
 
     private fun recyclerAdapter() {
-//        val recylcerAdapter = AsteroidAdapter(AsteroidListener { model ->
-//        viewModel.
-//        })
-        viewModel.list.observe(viewLifecycleOwner, Observer<List<Model>>{
-                model -> model?.apply {
-            (binding.asteroidRecycler.adapter as AsteroidAdapter)
 
-        }
+        viewModel.list.observe(viewLifecycleOwner,{
+            binding.asteroidRecycler.adapter as AsteroidAdapter
+
+
         })
     }
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 
 import com.udacity.asteroidradar.api.AsteroidApi
+
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.database.asDatabaseModel
 import com.udacity.asteroidradar.database.asDomainModel
@@ -20,10 +21,10 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
         it.asDomainModel()
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     suspend fun  refreshAsteroid(){
      withContext(Dispatchers.IO){
-//         val asteroidList = AsteroidApi.retrofitService.getList()
-//         val parsedAsteroidList = parseAsteroidsJsonResult(JSONObject(asteroidList))
+
         database.asteroidDao.insertAll()
      }
     }

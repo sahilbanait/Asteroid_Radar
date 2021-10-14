@@ -53,8 +53,8 @@ fun goneIfNotNull(view: View, it: Any?) {
  * Binding adapter used to display images from URL using Glide
  */
 @BindingAdapter("imageUrl")
-fun setImageUrl(imageView: ImageView, url: String) {
-    val imgUri = url.toUri().buildUpon().scheme("http").build()
+fun setImageUrl(imageView: ImageView, url: String?) {
+    val imgUri = url?.toUri()?.buildUpon()?.scheme("http")?.build()
     Picasso.get().load(imgUri)
         .placeholder(R.drawable.placeholder_picture_of_day)
         .error(R.drawable.placeholder_picture_of_day).into(imageView)

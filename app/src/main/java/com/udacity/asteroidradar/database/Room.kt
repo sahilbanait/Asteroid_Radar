@@ -11,6 +11,9 @@ interface AsteroidDao{
     @Query("Select * from asteroid ORDER BY closeApproachDate DESC")
     fun getAsteroid(): LiveData<List<AsteroidEntity>>
 
+    @Query("SELECT * FROM asteroid WHERE closeApproachDate=:today")
+    fun getTodayAsteroids(today: String): LiveData<List<AsteroidEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg asteroid: AsteroidEntity)
 
@@ -27,7 +30,7 @@ interface PictureOfTheDayDao{
 /**
  * DataBase
  */
-@Database(entities = [AsteroidEntity::class, PictureEntity::class],version = 1, exportSchema = false)
+@Database(entities = [AsteroidEntity::class, PictureEntity::class],version = 2, exportSchema = false)
 abstract class AsteroidDatabase: RoomDatabase(){
     abstract val asteroidDao: AsteroidDao
     abstract val pictureofThedayDao:PictureOfTheDayDao
