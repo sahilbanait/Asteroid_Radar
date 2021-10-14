@@ -8,6 +8,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.squareup.picasso.Picasso
+import com.udacity.asteroidradar.main.AsteroidApiStatus
 
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
@@ -54,9 +55,28 @@ fun goneIfNotNull(view: View, it: Any?) {
  */
 @BindingAdapter("imageUrl")
 fun setImageUrl(imageView: ImageView, url: String?) {
-    val imgUri = url?.toUri()?.buildUpon()?.scheme("http")?.build()
-    Picasso.get().load(imgUri)
+    url.let {  Picasso.get().load(url)
         .placeholder(R.drawable.placeholder_picture_of_day)
         .error(R.drawable.placeholder_picture_of_day).into(imageView)
+    }
+
 }
+
+@BindingAdapter("statusLoading")
+fun bindStatus(imageView: ImageView, status: AsteroidApiStatus?) {
+    when (status) {
+        AsteroidApiStatus.LOADING -> {
+            imageView.visibility = View.VISIBLE
+            imageView.setImageResource(R.drawable.loading_animation)
+        }
+        AsteroidApiStatus.DONE -> {
+            imageView.visibility = View.GONE
+        }
+        AsteroidApiStatus.ERROR -> {
+            imageView.visibility = View.VISIBLE
+            imageView.setImageResource(R.drawable.ic_connection_error)
+        }
+    }
+}
+
 

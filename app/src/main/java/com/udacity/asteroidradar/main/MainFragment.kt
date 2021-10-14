@@ -41,8 +41,6 @@ class MainFragment : Fragment() {
 
         viewModel.list.observe(viewLifecycleOwner,{
             binding.asteroidRecycler.adapter as AsteroidAdapter
-
-
         })
     }
 

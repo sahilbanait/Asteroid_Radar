@@ -9,10 +9,16 @@
             name="model"
             type="com.udacity.asteroidradar.domain.Model" />
     </data>
+<!--    <data>-->
+<!--        <variable-->
+<!--            name="clickListener"-->
+<!--            type="com.udacity.asteroidradar.main.AsteroidListener"/>-->
+<!--    </data>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:background="@color/app_background">
 
         <TextView
