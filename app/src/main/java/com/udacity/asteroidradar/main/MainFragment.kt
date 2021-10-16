@@ -33,13 +33,17 @@ class MainFragment : Fragment() {
         binding.asteroidRecycler.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = viewModelAdapter
+            recyclerAdapter()
         }
         return binding.root
     }
 
     private fun recyclerAdapter() {
 
-        viewModel.list.observe(viewLifecycleOwner,{
+        viewModel.list.observe(viewLifecycleOwner,{ list ->
+            list?.apply {
+                viewModelAdapter?.submitList(list)
+            }
             binding.asteroidRecycler.adapter as AsteroidAdapter
         })
     }

@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
+import com.udacity.asteroidradar.api.AsteroidApi
 import com.udacity.asteroidradar.api.AsteroidApiFilter
 
 import com.udacity.asteroidradar.database.getDatabase
@@ -27,6 +28,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val status:LiveData<AsteroidApiStatus>
     get() = _status
 
+
     private val database = getDatabase(application)
     private val asteroidRepository = AsteroidRepository(database)
     private val pictureOfTheDayRepository = PictureOfTheDayRepository(database)
@@ -37,14 +39,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
           getTodayAsteroid()
           pictureOfTheDayRepository.refreshPictureOfTheDay()
-
+            asteroidRepository.refreshAsteroid()
         }
     }
-    private fun getTodayAsteroid(){
+     fun getTodayAsteroid(){
         viewModelScope.launch {
             _status.value = AsteroidApiStatus.LOADING
             try {
-                asteroidRepository.refreshAsteroid()
                 _status.value = AsteroidApiStatus.DONE
             }catch (e: Exception){
                 _status.value = AsteroidApiStatus.ERROR
