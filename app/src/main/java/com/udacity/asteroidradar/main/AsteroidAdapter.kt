@@ -26,6 +26,9 @@ class AsteroidAdapter(private val clickListener: AsteroidListener): ListAdapter<
         val asteroidItem = getItem(position)
         holder as ViewHolder
         holder.bind(asteroidItem, clickListener)
+        holder.itemView.setOnClickListener{
+            clickListener.onClick(asteroidItem)
+        }
     }
 }
 

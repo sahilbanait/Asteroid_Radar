@@ -5,7 +5,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.udacity.asteroidradar.api.AsteroidApi
-import com.udacity.asteroidradar.api.AsteroidApiFilter
+
 
 import com.udacity.asteroidradar.database.getDatabase
 import com.udacity.asteroidradar.domain.Model
@@ -15,20 +15,22 @@ import com.udacity.asteroidradar.respository.PictureOfTheDayRepository
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-enum class AsteroidMenuOptions { Default, Today, Week, Saved }
+
 enum class AsteroidStatus {LOADING, ERROR, DONE}
 
-@RequiresApi(Build.VERSION_CODES.N)
+
 class MainViewModel(application: Application) : AndroidViewModel(application) {
+    enum class MenuOption { SHOW_TODAY, SHOW_NEXT_WEEK, SHOW_SAVED, SHOW_DEFAULT}
 
     private val _navigateToSelectedAsteroid = MutableLiveData<Model?>()
     val navigateToSelectedAsteroid: LiveData<Model?>
     get() = _navigateToSelectedAsteroid
 
-    private val _menuOptions = MutableLiveData<AsteroidMenuOptions>()
-    val menuOption:LiveData<AsteroidMenuOptions>
-    get() = _menuOptions
+    private val asteroidMenuOptions = MutableLiveData<MenuOption>()
+    val listMenu = Transformations.switchMap(asteroidMenuOptions) { menuOption ->
+        asteroidRepository.getSelectedAsteroid(menuOption)
 
+    }
     private val _status = MutableLiveData<AsteroidStatus>()
     val status:LiveData<AsteroidStatus>
         get() = _status
@@ -43,6 +45,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     init {
 
         viewModelScope.launch {
+            asteroidMenuOptions.postValue(MenuOption.SHOW_DEFAULT)
             _status.value = AsteroidStatus.LOADING
             try {
                 pictureOfTheDayRepository.refreshPictureOfTheDay()
@@ -55,6 +58,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun displayAsteroidDetails(model: Model) {
+    _navigateToSelectedAsteroid.value = model
+}
+    fun displayAsteroidDetailsComplete(){
+        _navigateToSelectedAsteroid.value = null
+    }
+    fun onAsteroidClicked(model: Model){
+        _navigateToSelectedAsteroid.value = model
+    }
+    fun updateAsteroidOptionList(option: MenuOption) {
+        asteroidMenuOptions.postValue(option)
+    }
 
 
 }

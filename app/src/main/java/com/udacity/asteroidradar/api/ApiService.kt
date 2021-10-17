@@ -16,10 +16,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
-
-
-enum class AsteroidApiFilter(val value: String) {NEXT_WEEK_ASTEROID("next"), VIEW_TODAY_ASTEROID("Today"), VIEW_SAVED_ASTEROID("saved") }
-
+import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
 
 interface AsteroidService{
     @GET("neo/rest/v1/feed")
@@ -41,10 +39,14 @@ private val moshi = Moshi.Builder()
     .build()
 
 object AsteroidApi {
+    var okHttpClient = OkHttpClient.Builder()
+        .connectTimeout(1, TimeUnit.MINUTES)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(15, TimeUnit.SECONDS)
+        .build()
 
     private val retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL).addConverterFactory(ScalarsConverterFactory.create())
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .addConverterFactory(MoshiConverterFactory.create(moshi)).client(okHttpClient).addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
     val retrofitServiceAsteroidService= retrofit.create(AsteroidService::class.java)
     val retrofitServicePictureofTheDayApi= retrofit.create(PictureofTheDayApi::class.java)

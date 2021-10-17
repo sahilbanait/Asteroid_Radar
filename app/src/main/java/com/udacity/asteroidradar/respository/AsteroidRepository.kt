@@ -4,23 +4,41 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-
-import com.udacity.asteroidradar.api.AsteroidApi
-import com.udacity.asteroidradar.api.getToday
-import com.udacity.asteroidradar.api.getWeek
-import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
+import com.udacity.asteroidradar.api.*
 
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.database.asDatabaseModel
 import com.udacity.asteroidradar.database.asDomainModel
 import com.udacity.asteroidradar.domain.Model
 import com.udacity.asteroidradar.domain.PictureOfTheDay
+import com.udacity.asteroidradar.main.MainViewModel
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
 class AsteroidRepository(private val database: AsteroidDatabase) {
+    fun getSelectedAsteroid(filter: MainViewModel.MenuOption): LiveData<List<Model>>{
+        return when(filter){
+            MainViewModel.MenuOption.SHOW_DEFAULT ->
+                Transformations.map(database.asteroidDao.getAsteroid()){
+                    it.asDomainModel()
+                }
+            MainViewModel.MenuOption.SHOW_TODAY ->
+                Transformations.map(database.asteroidDao.getTodayAsteroids(getToday())){
+                    it.asDomainModel()
+                }
+            MainViewModel.MenuOption.SHOW_NEXT_WEEK ->
+                Transformations.map(database.asteroidDao.getWeekAsteroids(getToday(), getWeek())){
+                    it.asDomainModel()
+                }
+            MainViewModel.MenuOption.SHOW_SAVED ->
+                Transformations.map(database.asteroidDao.getAsteroid()){
+                    it.asDomainModel()
+                }
+
+        }
+    }
     val asteroid: LiveData<List<Model>> = Transformations.map(database.asteroidDao.getAsteroid()){
         it.asDomainModel()
     }
