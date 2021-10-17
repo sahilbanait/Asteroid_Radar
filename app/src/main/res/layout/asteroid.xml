@@ -31,6 +31,7 @@
             android:fontFamily="@font/roboto_medium"
             android:text="@{model.codename}"
             android:textColor="@android:color/white"
+
             app:layout_constraintBottom_toTopOf="@+id/approachDate"
             app:layout_constraintStart_toStartOf="parent"
             tools:text=""

@@ -2,13 +2,15 @@ package com.udacity.asteroidradar
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.squareup.picasso.Picasso
-import com.udacity.asteroidradar.main.AsteroidApiStatus
+import com.udacity.asteroidradar.main.AsteroidStatus
+
 
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
@@ -63,18 +65,17 @@ fun setImageUrl(imageView: ImageView, url: String?) {
 }
 
 @BindingAdapter("statusLoading")
-fun bindStatus(imageView: ImageView, status: AsteroidApiStatus?) {
+fun bindStatus(bar: ProgressBar,  status: AsteroidStatus?) {
     when (status) {
-        AsteroidApiStatus.LOADING -> {
-            imageView.visibility = View.VISIBLE
-            imageView.setImageResource(R.drawable.loading_animation)
+        AsteroidStatus.LOADING -> {
+            bar.visibility = View.VISIBLE
         }
-        AsteroidApiStatus.DONE -> {
-            imageView.visibility = View.GONE
+        AsteroidStatus.DONE -> {
+            bar.visibility = View.GONE
         }
-        AsteroidApiStatus.ERROR -> {
-            imageView.visibility = View.VISIBLE
-            imageView.setImageResource(R.drawable.ic_connection_error)
+        AsteroidStatus.ERROR -> {
+            bar.visibility = View.GONE
+
         }
     }
 }
