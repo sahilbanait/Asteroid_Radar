@@ -27,7 +27,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     get() = _navigateToSelectedAsteroid
 
     private val asteroidMenuOptions = MutableLiveData<MenuOption>()
-    val listMenu = Transformations.switchMap(asteroidMenuOptions) { menuOption ->
+    val list = Transformations.switchMap(asteroidMenuOptions) { menuOption ->
         asteroidRepository.getSelectedAsteroid(menuOption)
 
     }
@@ -39,7 +39,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val database = getDatabase(application)
     private val asteroidRepository = AsteroidRepository(database)
     private val pictureOfTheDayRepository = PictureOfTheDayRepository(database)
-    val list = asteroidRepository.asteroid
     val pictureOfTheDay = pictureOfTheDayRepository.pictureOfTheDay
 
     init {
