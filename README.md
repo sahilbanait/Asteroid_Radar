@@ -1,8 +1,20 @@
 # Asteroid_Radar
-MVVM + Retrofit + Couroutine + Room + RecyclerView
+MVVM + Retrofit + Couroutine + Room + RecyclerView + Picasso + SafeArgs + Glide
+
+This app extract the asteroids using NASA Api
+
+
+# 1.
+![Screenshot 2021-10-19 201537](https://user-images.githubusercontent.com/77091616/137907394-62a6557a-0cbd-4d23-abbe-813f31c8ce9b.jpg)
+
+# 2.
+![Screenshot 2021-12](https://user-images.githubusercontent.com/77091616/137909864-d4bae9a6-c8b9-425d-8558-fea43dccd4fd.jpg)
+
+
 # Dependencies
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])![Uploading Screenshot 2021-10-19 201537.jpg…]()
+
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'androidx.core:core-ktx:1.6.0'
